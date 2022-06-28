@@ -1,1 +1,261 @@
+from tkinter import *
+from tkinter import messagebox
+from PIL import Image, ImageTk
+from tkinter import font
+
+WIDTH = 1050
+HEIGHT = 500
+
+window = Tk()
+window.title("Fantasy scoop ice cream parlor")
+
+canvas = Canvas(window, width = WIDTH, height = HEIGHT)
+canvas.pack()
+
+LIGHT_PINK = "#FFE6EE"
+LIGHTBLUE = "#CFEEFA"
+canvas.create_rectangle(0, 0, 500, 500, fill = LIGHTBLUE)
+canvas.create_rectangle(1050, 0, 500, 500, fill = LIGHT_PINK)
+
+#ice cream shop image
+cream_shop= Image.open("shop.jpg") #creates the image
+cream_shop = cream_shop.resize((350,350))
+cream_shop = ImageTk.PhotoImage(cream_shop)
+canvas.create_image(250, HEIGHT/2, image = cream_shop)
+
+#ice cream
+cone= Image.open("cone.jpg")
+cone = cone.resize((150,150))
+cone = ImageTk.PhotoImage(cone)
+canvas.create_image(450, 80, image = cone)
+
+#icecream
+cone2= Image.open("cone.jpg")
+cone2 = cone2.resize((150,150))
+cone2 = ImageTk.PhotoImage(cone2)
+canvas.create_image(55, 80, image = cone2)
+
+#icecream
+cone3= Image.open("creamy.jpg")
+cone3 = cone3.resize((120,120))
+cone3 = ImageTk.PhotoImage(cone3)
+canvas.create_image(58 , HEIGHT - 100, image = cone3)
+
+#icecream
+cone4= Image.open("creamy.jpg")
+cone4 = cone4.resize((120,120))
+cone4 = ImageTk.PhotoImage(cone4)
+canvas.create_image(442, HEIGHT - 100 , image = cone4)
+
+#-----------------main code-----------------------------
+
+def total_cost():
+  """returns a message box that shows the total cost of the entire price"""
+  totalcost = 0
+  name = order_name_entry.get()
+  size = radio_status.get() #retrieves what the user entered
+  cup_or_cone = appliance_status.get()
+  tax_on_off = tax_status.get()
+  drizzle_selected = drizzle_radio_status.get()
+  sprinkles_on = sprinkles_status.get()
+  cookie_on = cookie_status.get()
+  pepper_on = pepper_status.get()
+  oreo_on = oreo_status.get()
+  brownie_on = brownies_status.get()
+  strawberry_on = strawberry_status.get() #checks to see what boxes are checked
+  rasberry_on = rasberries_status.get()
+  marshmellow_on = marshmellow_status.get()
+ 
+  if drizzle_selected == 1:
+    totalcost = totalcost + 0.50
+  if drizzle_selected == 2:
+    totalcost = totalcost + 0.50
+  if drizzle_selected == 3:
+    totalcost = totalcost + 0.50
+  if cup_or_cone == 1:
+    totalcost = totalcost
+  if cup_or_cone == 2:
+    totalcost = totalcost + 1
+   
+  if size == 1:
+    totalcost = totalcost + 5.99
+  if size == 2:
+    totalcost = totalcost + 6.99
+  if size == 3:                    
+    totalcost = totalcost + 7.99
+
+  if sprinkles_on == True:
+    totalcost = totalcost + 0.25
+  if cookie_on == True:
+    totalcost = totalcost + 0.25
+  if pepper_on == True:
+    totalcost = totalcost + 0.25
+  if oreo_on == True:
+    totalcost = totalcost + 0.25
+  if brownie_on == True :
+    totalcost = totalcost + 0.25
+  if strawberry_on == True:
+    totalcost = totalcost + 0.25
+  if rasberry_on == True:
+    totalcost = totalcost + 0.25
+  if marshmellow_on == True:
+    totalcost = totalcost + 0.25
+
+
+  if tax_on_off == True:
+    totalcost = (totalcost * 0.13) + totalcost
+
+  totalcost = round(totalcost, 2)
+ 
+  messagebox.showinfo("TOTAL COST", "Thanks " + name+" ! You owe me: $ " + str(totalcost))
+ 
+   
+  #label  
+order_name_label = Label(window, text = "Enter your ordering name: ", font = ("DejaVu sans", 10, "bold"))
+order_name_label.pack()
+order_name_label.place(x = 510, y = 10)
+
+  #entry
+order_name_entry = Entry(window, width = 20)
+order_name_entry.pack()
+order_name_entry.place(x = 785, y = 10)
+
+  #label
+size_label = Label(window, text = "Enter the ice cream size: ", font = ("DejaVu sans", 10, "bold"))
+size_label.pack()
+size_label.place(x = 510 , y = 40 )
+
+  #radiobutton
+radio_status = IntVar(window, 2) #this returns a value for which radio button is selected
+
+  #small
+small_radio_button = Radiobutton(window, text = "S", variable = radio_status, value = 1,)
+small_radio_button.pack()
+small_radio_button.place(x = 780, y = 40)
+ 
+  #medium
+medium_radio_button = Radiobutton(window, text = "M", variable = radio_status, value = 2,)
+medium_radio_button.pack()
+medium_radio_button.place(x = 840 , y = 40 )
+ 
+  #large
+large_radio_button = Radiobutton(window, text = "L", variable= radio_status, value = 3,)
+large_radio_button.pack()
+large_radio_button.place(x = 900, y = 40)
+
+  #label
+flavour_label = Label(window, text= "Select a flavour: ", font = ("Dejavu Sans", 10, "bold"))
+flavour_label.pack()
+flavour_label.place(x = 510, y = 75)
+
+radio_flavour_status = IntVar(window, 2)
+
+chocolate_radio_button = Radiobutton(window, text = "Chocolate", variable = radio_flavour_status , value = 1)
+chocolate_radio_button.pack()
+chocolate_radio_button.place(x = 670, y = 75)
+ 
+vanilla_radio_button = Radiobutton(window, text = "Vanilla", variable = radio_flavour_status, value = 2)
+vanilla_radio_button.pack()
+vanilla_radio_button.place(x = 800, y = 75)
+ 
+strawberry_radio_button = Radiobutton(window, text = "Strawberry", variable = radio_flavour_status , value = 3)
+strawberry_radio_button.pack()
+strawberry_radio_button.place(x = 910, y = 75)
+ 
+  #label
+toppings_label = Label(window, text = "Select your toppings: ", font = ("DejaVu Sans", 10, "bold"))
+toppings_label.pack()
+toppings_label.place(x = 510, y = 110)
+
+sprinkles_status = BooleanVar()
+sprinkles = Checkbutton(window, text = "sprinkles", variable = sprinkles_status)
+sprinkles.pack()
+sprinkles.place(x = 719, y = 110,)
+
+cookie_status = BooleanVar()
+cookie_dough = Checkbutton(window, text = "Cookie dough", variable = cookie_status)
+cookie_dough.pack()
+cookie_dough.place(x = 719, y = 138,)
+
+pepper_status = BooleanVar()
+pepper_flakes = Checkbutton(window, text = "Chili flakes", variable = pepper_status)
+pepper_flakes.pack()
+pepper_flakes.place(x = 719, y = 166,)
+
+oreo_status = BooleanVar()
+oreo_crumbs = Checkbutton(window, text = "Oreo crumbs", variable = oreo_status)
+oreo_crumbs.pack()
+oreo_crumbs.place(x = 719,  y = 194)
+
+brownies_status = BooleanVar()
+brownies = Checkbutton(window, text = "Brownies", variable = brownies_status)
+brownies.pack()
+brownies.place(x = 875, y = 110)
+
+strawberry_status = BooleanVar()
+strawberries = Checkbutton(window, text = "Strawberries", variable = strawberry_status)
+strawberries.pack()
+strawberries.place(x = 875, y = 138)
+
+rasberries_status = BooleanVar()
+rasberries = Checkbutton(window, text = "Rasberries", variable = rasberries_status)
+rasberries.pack()
+rasberries.place(x = 875, y = 166)
+
+marshmellow_status = BooleanVar()
+marshmellow = Checkbutton(window, text = "Marshmellow", variable = marshmellow_status)
+marshmellow.pack()
+marshmellow.place(x = 875, y = 194)
+ 
+  #label
+drizzle_label = Label(window, text = "Select a drizzle: ", font = ("DejaVu sans", 10, "bold"))
+drizzle_label.pack()
+drizzle_label.place(x = 510, y = 270)
+
+  #radiobutton
+
+drizzle_radio_status = IntVar(window, 2)
+
+chocolate_syrup_radio = Radiobutton(window, text = "Chocolate", variable = drizzle_radio_status, value = 1 )
+chocolate_syrup_radio.pack()
+chocolate_syrup_radio.place(x = 670, y = 270)
+caramel_syrup_radio = Radiobutton(window, text = "Caramel ", variable = drizzle_radio_status, value = 2)
+caramel_syrup_radio.pack()
+caramel_syrup_radio.place(x = 795, y = 270 )
+strawberry_syrup_radio = Radiobutton(window, text = "Strawberry", variable = drizzle_radio_status, value = 3)
+strawberry_syrup_radio.pack()
+strawberry_syrup_radio.place(x = 910, y = 270)
+
+  #label
+cup_cone_label = Label(window, text = "Select a cup or cone:", font = ("DejaVu sans", 10, "bold"))
+cup_cone_label.pack()
+cup_cone_label.place(x = 510, y = 300)
+
+appliance_status = IntVar(window, 1)
+  #checkbox
+Cup_radio = Radiobutton(window, text = "Cup", variable = appliance_status, value = 1)
+Cup_radio.pack()
+Cup_radio.place(x = 750, y = 300)
+Cone_radio = Radiobutton(window, text = "Cone", variable = appliance_status, value = 2)
+Cone_radio.pack()
+Cone_radio.place(x = 850, y = 300)
+
+  #label
+tax_label = Label(window, text = "Tax included: ")
+tax_label.pack()
+tax_label.place(x = 510, y = 330)
+
+  #checkbox
+tax_status = BooleanVar()
+tax_included = Checkbutton(window, variable = tax_status)
+tax_included.pack()
+tax_included.place(x = 690 , y = 330 )
+
+ #button
+submit_total_button = Button(window, text = "SUBMIT ORDER", command = total_cost, font = ("DejaVu Sans", 12, "bold"))
+submit_total_button.pack()
+submit_total_button.place(x = 750, y = 360)
+
+mainloop()
+
 
