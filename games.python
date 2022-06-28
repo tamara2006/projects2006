@@ -47,7 +47,7 @@ cone4 = cone4.resize((120,120))
 cone4 = ImageTk.PhotoImage(cone4)
 canvas.create_image(442, HEIGHT - 100 , image = cone4)
 
-#-----------------main code-----------------------------
+#-----------------main code------------------------------
 
 def total_cost():
   """returns a message box that shows the total cost of the entire price"""
